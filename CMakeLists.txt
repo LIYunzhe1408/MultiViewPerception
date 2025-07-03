@@ -15,12 +15,13 @@ if(NOT realsense2_FOUND)
     message(FATAL_ERROR "RealSense SDK not found. Please ensure librealsense is installed and discoverable by CMake.")
 endif()
 
-add_executable(OpenCVTest main.cpp)
+# Header file search path
+include_directories(include)
+
+# Files to be compiled and linked
+file(GLOB SOURCES "src/*.cpp")
+add_executable(OpenCVTest ${SOURCES} main.cpp)
 target_link_libraries(OpenCVTest PRIVATE
     ${OpenCV_LIBS}
     realsense2
 )
-# Include directories (if you have custom headers)
-# target_include_directories(my_realsense_app PRIVATE
-#     ${CMAKE_CURRENT_SOURCE_DIR}/include
-# )
