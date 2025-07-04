@@ -15,8 +15,12 @@ if(NOT realsense2_FOUND)
     message(FATAL_ERROR "RealSense SDK not found. Please ensure librealsense is installed and discoverable by CMake.")
 endif()
 
+
 # Header file search path
 include_directories(include)
+include_directories(${CMAKE_SOURCE_DIR}/third_party/onnxruntime/include)
+link_directories(${CMAKE_SOURCE_DIR}/third_party/onnxruntime/lib)
+
 
 # Files to be compiled and linked
 file(GLOB SOURCES "src/*.cpp")
@@ -24,4 +28,5 @@ add_executable(OpenCVTest ${SOURCES} main.cpp)
 target_link_libraries(OpenCVTest PRIVATE
     ${OpenCV_LIBS}
     realsense2
+    onnxruntime
 )
