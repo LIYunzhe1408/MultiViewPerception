@@ -2,6 +2,7 @@
 #include <iostream>
 #include <librealsense2/rs.hpp>
 #include "include/camera/opencvCamera.hpp"
+#include "include/camera/realsenseCamera.hpp"
 
 void webcam() {
     // Open the default camera (0 = first camera)
@@ -73,20 +74,29 @@ int main() {
     // realsense();
     using namespace perception;
 
-    camera::OpenCVCamera webcam;
-    if (!webcam.init()) {
-        std::cerr << "Initialization failed.\n";
+    // camera::OpenCVCamera webcam;
+    camera::RealsenseCamera realsense;
+    // if (!webcam.init()) {
+    //     std::cerr << "Webcam - Initialization failed.\n";
+    //     return -1;
+    if (!realsense.init()) {
+        std::cerr << "Realsense - Initialization failed.\n";
         return -1;
     }
 
-    cv::Mat frame;
+    // cv::Mat frame;
+    cv::Mat frame_realsense;
 
     while(true) {
-        if (!webcam.getFrame(frame)){
-            std::cerr << "Image read failed.\n";
+        // if (!webcam.getFrame(frame)){
+        //     std::cerr << "Image read failed.\n";
+        //     continue;
+        // }
+        if (!realsense.getFrame(frame_realsense)) {
+            std::cerr << "Realsense - Image read failed.\n";
             continue;
         }
-        cv::imshow("Webcam", frame);
+        cv::imshow("Realsense", frame_realsense);
         if (cv::waitKey(1) == 'q') break;
     }
     return 0;
