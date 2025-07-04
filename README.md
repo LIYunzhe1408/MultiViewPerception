@@ -1,10 +1,22 @@
 # MultiViewPerception
 This repo is created for engineering skills practice in the autonoumous vehicle field, especially for c++ application. We implemented a tiny close-loop perception pipeline with C++ features including template, classes, functions, modularity, and etc.
 
+
+## Results
+Two-view camera detection test.
+![alt text](./figures/two-view%20camera%20yolov5.png)
+
 ## Update Log
-July 3, 2025. Update `class RealsenseCamera` and integrate two cameras.
-July 2, 2025. Update `class OpenCVCamera`.
-July 1, 2025. Environment set up and make the camera working.
+July 3, 2025. 
+- Update `class RealsenseCamera` and integrate two cameras.
+- Update onnx runtime to load yolo model.
+- Integrate yolov5 on webcam and realsense, close the two-camera view detection loop.
+
+July 2, 2025. 
+- Update `class OpenCVCamera`.
+
+July 1, 2025. 
+- Environment set up and make the camera working.
 
 
 

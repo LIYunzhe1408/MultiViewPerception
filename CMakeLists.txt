@@ -6,27 +6,33 @@ set(CMAKE_CXX_STANDARD 17)
 # Find OpenCV
 find_package(OpenCV REQUIRED)
 if(NOT OpenCV_FOUND)
-    message(FATAL_ERROR "OpenCV not found. Please set OpenCV_DIR.")
+    message(FATAL_ERROR "OpenCV not found.")
 endif()
 
 # Find RealSense SDK
 find_package(realsense2 REQUIRED)
 if(NOT realsense2_FOUND)
-    message(FATAL_ERROR "RealSense SDK not found. Please ensure librealsense is installed and discoverable by CMake.")
+    message(FATAL_ERROR "RealSense SDK not found.")
 endif()
 
-
-# Header file search path
-include_directories(include)
-include_directories(${CMAKE_SOURCE_DIR}/third_party/onnxruntime/include)
-link_directories(${CMAKE_SOURCE_DIR}/third_party/onnxruntime/lib)
+find_package(yaml-cpp REQUIRED)
 
 
-# Files to be compiled and linked
-file(GLOB SOURCES "src/*.cpp")
-add_executable(OpenCVTest ${SOURCES} main.cpp)
+# Source files
+file(GLOB SOURCES "src/*.cpp")  
+add_executable(OpenCVTest ${SOURCES} main.cpp)  
+
+# Include directories
+target_include_directories(OpenCVTest PRIVATE
+    ${PROJECT_SOURCE_DIR}/include
+    ${PROJECT_SOURCE_DIR}/third_party/onnxruntime/include
+)
+
+# Link ONNX and others
+target_link_directories(OpenCVTest PRIVATE ${PROJECT_SOURCE_DIR}/third_party/onnxruntime/lib)
 target_link_libraries(OpenCVTest PRIVATE
     ${OpenCV_LIBS}
     realsense2
     onnxruntime
+    yaml-cpp
 )
